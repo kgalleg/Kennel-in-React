@@ -14,9 +14,12 @@ export default class AnimalList extends Component {
                                 <div className="card-title">
                                     <img src={dog} className="icon--dog" alt="cute doggy"/>
                                     <h5>{animal.name}</h5>
+                                    <div>Owner Name: <br/> {this.props.owners.find(owner =>
+                                     owner.id === animal.ownerId).name}</div>
                                     <button
                                         onClick={() => this.props.deleteAnimal(animal.id)}
-                                        className="card-link">Delete</button>
+                                        className="card-link">Delete
+                                        </button>
                                 </div>
                             </div>
                         </div>
@@ -26,6 +29,11 @@ export default class AnimalList extends Component {
             )
         }
     }
+
+
+
+    //instead of find, you can use filter method to add multiple owners.
+
 
 //animal is just taco, it can be whatever,
 //so when you map through the array of animals, it

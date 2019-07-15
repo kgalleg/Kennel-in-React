@@ -4,6 +4,7 @@ import AnimalList from './animal/AnimalList'
 import LocationList from './location/LocationList'
 import EmployeeList from './employee/EmployeeList'
 // import OwnerList from './owner/OwnerList'
+// import AnimalManager from '../modules/AnimalManager'
 
 
 const url = "http://localhost:5002/"
@@ -18,6 +19,7 @@ export default class ApplicationViews extends Component {
         search: []
     }
 
+
     componentDidMount() {
         const newState = {}
 
@@ -30,6 +32,9 @@ export default class ApplicationViews extends Component {
             .then(() => fetch("http://localhost:5002/locationsFromAPI")
             .then(r => r.json()))
             .then(locations => newState.locations = locations)
+            .then(() => fetch("http://localhost:5002/ownersFromAPI")
+            .then(r => r.json()))
+            .then(owners => newState.owners= owners)
             .then(() => this.setState(newState))
     }
 
@@ -65,7 +70,7 @@ export default class ApplicationViews extends Component {
                     return <EmployeeList employees={this.state.employees} />
                 }} />
                 <Route path="/search" render={(props) => {
-                    return <searchList />
+                    // return <SearchList />
                 }} />
             </React.Fragment>
         )

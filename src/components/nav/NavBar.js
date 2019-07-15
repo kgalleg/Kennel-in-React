@@ -19,8 +19,8 @@ export default class NavBar extends Component {
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/search">
-                        <input type="text" placeHolder = "Search"  />
-                        <button className="button is-info" onClick={this.addItem}>search</button>
+                        <input type="text" placeholder = "Search"  />
+                         {/* onKeyPress={this.addItem}>search</button> */}
                         </Link>
 
                     </li>
