@@ -1,0 +1,91 @@
+{
+  "employeesFromAPI": [
+    {
+      "id": 1,
+      "name": "Jessica Younker"
+    },
+    {
+      "id": 2,
+      "name": "Jordan Nelson"
+    },
+    {
+      "id": 3,
+      "name": "Zoe LeBlanc"
+    },
+    {
+      "id": 4,
+      "name": "Blaise Roberts"
+    }
+  ],
+  "locationsFromAPI": [
+    {
+      "id": 1,
+      "name": "Nashville North",
+      "address": "500 Circle Way"
+    },
+    {
+      "id": 2,
+      "name": "Nashville South",
+      "address": "10101 Binary Court"
+    }
+  ],
+  "animalsFromAPI": [
+    {
+      "id": 1,
+      "name": "Doodles",
+      "ownerId": 1
+    },
+    {
+      "id": 3,
+      "name": "Angus",
+      "ownerId": 3
+    },
+    {
+      "id": 4,
+      "name": "Henley",
+      "ownerId": 4
+    },
+    {
+      "id": 5,
+      "name": "Derkins",
+      "ownerId": 5
+    },
+    {
+      "id": 6,
+      "name": "Checkers",
+      "ownerId": 6
+    }
+  ],
+  "ownersFromAPI": [
+    {
+      "id": 1,
+      "name": "Ryan Tanay",
+      "phoneNumber": "123-123-1234"
+    },
+    {
+      "id": 2,
+      "name": "Emma Beaton",
+      "phoneNumber": "123-123-6577"
+    },
+    {
+      "id": 3,
+      "name": "Dani Adkins",
+      "phoneNumber": "123-123-5678"
+    },
+    {
+      "id": 4,
+      "name": "Adam Oswalt",
+      "phoneNumber": "123-123-1254"
+    },
+    {
+      "id": 5,
+      "name": "Fletcher Bangs",
+      "phoneNumber": "123-123-7887"
+    },
+    {
+      "id": 6,
+      "name": "Angela Lee",
+      "phoneNumber": "123-123-4676"
+    }
+  ]
+}
