@@ -1,9 +1,9 @@
-.animals {
+.owners {
     display: flex;
     justify-content: space-evenly;
 }
 
-.icon--dog {
+.icon--owners {
     width: 50px;
     height: 50px;
 }
@@ -24,12 +24,12 @@
     font-size: 0.7em;
 }
 
-.ownerList {
+/* .ownerList {
     font-size: 0.75em;
-}
+} */
 
-.animalButton {
+/* .animalButton {
     display: flex;
     justify-content: space-evenly;
     margin: 0 0 10px 0;
-  }
+  } */

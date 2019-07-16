@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import dog from "./DogIcon.svg"
 import "./animal.css"
+import { Link } from "react-router-dom";
 
 export default class AnimalList extends Component {
         render() {
             return (
+                <React.Fragment>
+                <div className="animalButton">
+                    <button type="button"
+                            className="btn btn-success"
+                            onClick={() => {
+                                this.props.history.push("/animals/new")}
+                            }>
+                        Admit Animal
+                    </button>
+                </div>
                 <section className="animals">
                     {/* <h3>Animals</h3> */}
                 {
@@ -14,8 +25,9 @@ export default class AnimalList extends Component {
                                 <div className="card-title">
                                     <img src={dog} className="icon--dog" alt="cute doggy"/>
                                     <h5>{animal.name}</h5>
-                                    <div>Owner Name: <br/> {this.props.owners.find(owner =>
-                                     owner.id === animal.ownerId).name}</div>
+                                    <Link className="nav-link" to={`/animals/${animal.id}`}>Details</Link>
+                                    {/* <div>Owner Name: <br/> {this.props.owners.find(owner =>
+                                     owner.id === animal.ownerId).name}</div> */}
                                     <button
                                         onClick={() => this.props.deleteAnimal(animal.id)}
                                         className="card-link">Delete
@@ -26,6 +38,7 @@ export default class AnimalList extends Component {
                     )
                 }
                 </section>
+                </React.Fragment>
             )
         }
     }

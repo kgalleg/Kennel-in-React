@@ -1,7 +1,7 @@
 // import React, { Component } from 'react';
 
 
-// export default class SearchList extends Component {
+// export default class SearchResults extends Component {
 
 // render() {
 //     return (
