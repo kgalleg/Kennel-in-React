@@ -13,7 +13,7 @@ import AnimalManager from '../modules/AnimalManager'
 // import EmployeeManager from '../modules/EmployeeManager'
 import APIManager from '../modules/APIManager'
 import Login from './authentication/Login'
-
+import AnimalEditForm from './animal/AnimalEditForm'
 
 // const url = "http://localhost:5002/"
 
@@ -158,6 +158,16 @@ class ApplicationViews extends Component {
       );
 
 
+//chapter 11 edit animal
+      updateAnimal = (editedAnimalObject) => {
+        return AnimalManager.put(editedAnimalObject)
+        .then(() => AnimalManager.getAll())
+        .then(animals => {
+          this.setState({
+            animals: animals
+          })
+        });
+      };
 
 
     render() {
@@ -181,17 +191,27 @@ class ApplicationViews extends Component {
 
                     return <AnimalDetail animal={animal} dischargeAnimal={this.deleteAnimal}/>
 
-                }} />
+                }}
+                />
+                    <Route
+                    path="/animals/:animalId(\d+)/edit" render={props => {
+                        return <AnimalEditForm {...props} employees={this.state.employees} updateAnimal={this.updateAnimal}/>
+                    }}/>
+
                     <Route path="/animals/new" render={(props) => {
                     return <AnimalForm
                     {...props}
                        addAnimal={this.addAnimal}
                        employees={this.state.employees} />
-                }} />
+                }}
+                />
                 <Route path="/employees" render={(props) => {
                     if (this.isAuthenticated()) {
-                        return <EmployeeList deleteEmployee={this.deleteEmployee}
-                                             employees={this.state.employees} />
+                        return <EmployeeList
+                        deleteEmployee={this.deleteEmployee}
+                        employees={this.state.employees}
+                        animals={this.state.animals} />
+                        //argument passed into this that will create a key names animals, or employees or delteEmployee
                     } else {
                         return <Redirect to="/login" />
                     }

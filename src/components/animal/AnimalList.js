@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import dog from "./DogIcon.svg"
+import AnimalCard from "./AnimalCard"
+// import dog from "./DogIcon.svg"  this is now being used in animal card
 import "./animal.css"
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom"; this is now being used in animal card
 
 export default class AnimalList extends Component {
         render() {
@@ -20,21 +21,22 @@ export default class AnimalList extends Component {
                     {/* <h3>Animals</h3> */}
                 {
                     this.props.animals.map(animal =>
-                        <div key={animal.id} className="card">
-                            <div className="card-body">
-                                <div className="card-title">
-                                    <img src={dog} className="icon--dog" alt="cute doggy"/>
-                                    <h5>{animal.name}</h5>
-                                    <Link className="nav-link" to={`/animals/${animal.id}`}>Details</Link>
-                                    {/* <div>Owner Name: <br/> {this.props.owners.find(owner =>
-                                     owner.id === animal.ownerId).name}</div> */}
-                                    <button
-                                        onClick={() => this.props.deleteAnimal(animal.id)}
-                                        className="card-link">Delete
-                                        </button>
-                                </div>
-                            </div>
-                        </div>
+                        <AnimalCard key={animal.id} animal={animal} {...this.props} />
+                        // <div key={animal.id} className="card">
+                        //     <div className="card-body">
+                        //         <div className="card-title">
+                        //             <img src={dog} className="icon--dog" alt="cute doggy"/>
+                        //             <h5>{animal.name}</h5>
+                        //             <Link className="nav-link" to={`/animals/${animal.id}`}>Details</Link>
+                        //             {/* <div>Owner Name: <br/> {this.props.owners.find(owner =>
+                        //              owner.id === animal.ownerId).name}</div> */}
+                        //             <button
+                        //                 onClick={() => this.props.deleteAnimal(animal.id)}
+                        //                 className="card-link">Delete
+                        //                 </button>
+                        //         </div>
+                        //     </div>
+                        // </div>
                     )
                 }
                 </section>
