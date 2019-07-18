@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import React, { Component } from "react"
 import { withRouter } from 'react-router'
 import LocationList from './location/LocationList'
@@ -8,10 +8,11 @@ import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
 import OwnerList from './owner/OwnerList'
 import AnimalManager from '../modules/AnimalManager'
-import LocationsManager from '../modules/LocationsManager'
-import OwnersManager from '../modules/OwnersManager'
-import EmployeeManager from '../modules/EmployeeManager'
-
+// import LocationsManager from '../modules/LocationsManager'
+// import OwnersManager from '../modules/OwnersManager'
+// import EmployeeManager from '../modules/EmployeeManager'
+import APIManager from '../modules/APIManager'
+import Login from './authentication/Login'
 
 
 // const url = "http://localhost:5002/"
@@ -27,36 +28,72 @@ class ApplicationViews extends Component {
     }
 
 
+
     componentDidMount() {
-        const newState = {}
+        const newState = {};
 
-        AnimalManager.getAll()
-        // fetch("http://localhost:5002/animalsFromAPI")
-        //     .then(r => r.json())
-            .then(animals => newState.animals = animals)
+      APIManager.all("animalsFromAPI")
+      .then(animals => (newState.animals = animals))
+      .then(() => APIManager.all("employeesFromAPI"))
+      .then(employees => (newState.employees = employees))
+      .then(() => APIManager.all("locationsFromAPI"))
+      .then(locations => (newState.locations = locations))
+      .then(() => APIManager.all("ownersFromAPI"))
+      .then(owners => (newState.owners = owners))
+      .then(() => this.setState(newState))
+  }
 
-         EmployeeManager.getAll()
+//this below was the original fetch call and used separate modules inside the modules folder
 
-            // .then(() => fetch("http://localhost:5002/employeesFromAPI")
-            // .then(r => r.json()))
-            .then(employees => newState.employees = employees)
+    //     AnimalManager.getAll()
+    //     // fetch("http://localhost:5002/animalsFromAPI")
+    //     //     .then(r => r.json())
+    //         .then(animals => newState.animals = animals)
 
-        LocationsManager.getAll()
+    //      EmployeeManager.getAll()
 
-            // .then(() => fetch("http://localhost:5002/locationsFromAPI")
-            // .then(r => r.json()))
-            .then(locations => newState.locations = locations)
+    //         // .then(() => fetch("http://localhost:5002/employeesFromAPI")
+    //         // .then(r => r.json()))
+    //         .then(employees => newState.employees = employees)
 
-            OwnersManager.getAll()
-            // .then(() => fetch("http://localhost:5002/ownersFromAPI")
-            // .then(r => r.json()))
-            .then(owners => newState.owners= owners)
+    //     LocationsManager.getAll()
 
-            .then(() => this.setState(newState))
-    }
+    //         // .then(() => fetch("http://localhost:5002/locationsFromAPI")
+    //         // .then(r => r.json()))
+    //         .then(locations => newState.locations = locations)
 
+    //         OwnersManager.getAll()
+    //         // .then(() => fetch("http://localhost:5002/ownersFromAPI")
+    //         // .then(r => r.json()))
+    //         .then(owners => newState.owners= owners)
 
+    //         .then(() => this.setState(newState))
+    // }
 
+    // Check if credentials are in local storage
+    isAuthenticated = () => sessionStorage.getItem("credentials") !== null
+    //this will return true or false/ yes or no
+
+ // Chapter 5 stretch goal delete (another way to delete if refactored)
+    // deleteAnimal = (id) => {
+    //     return AnimalManager.removeAndList(id)
+    //     .then(animals => this.setState({
+    //         animals: animals
+    //       })
+    //     )
+    //   }
+
+//another way to delete below:
+    //JE deleteAnimal = id => {
+    //     return APIManager.delete("animals", id)
+    //       .then(() => APIManager.all("animals"))
+    //       .then(animals => {
+    //         this.props.history.push("/animals");
+    //         this.setState({ animals: animals });
+    //       });
+    //   };
+
+    //Deleteting that works right now....
     deleteAnimal = id => {
         return fetch(`http://localhost:5002/animalsFromAPI/${id}`, {
             method: "DELETE"
@@ -86,6 +123,9 @@ class ApplicationViews extends Component {
         })
       )
     }
+
+
+
     deleteOwner = id => {
         return fetch(`http://localhost:5002/ownersFromAPI/${id}`, {
             method: "DELETE"
@@ -149,15 +189,26 @@ class ApplicationViews extends Component {
                        employees={this.state.employees} />
                 }} />
                 <Route path="/employees" render={(props) => {
-                    return <EmployeeList employees={this.state.employees}
-                    deleteEmployee={this.deleteEmployee} />
+                    if (this.isAuthenticated()) {
+                        return <EmployeeList deleteEmployee={this.deleteEmployee}
+                                             employees={this.state.employees} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                    // return <EmployeeList employees={this.state.employees}
+                    // deleteEmployee={this.deleteEmployee} /> this was the original code
                 }} />
                 <Route exact path="/owners" render={(props) => {
+                    if (this.isAuthenticated()) {
                     return <OwnerList owners={this.state.owners} deleteOwner={this.deleteOwner}/>
+                } else {
+                    return <Redirect to="/login" />
+                    }
                 }} />
                 {/* <Route path="/search" render={(props) => {
                     // return <SearchResults />
                 }} /> */}
+                <Route path="/login" component={Login} />
             </React.Fragment>
         )
     }
