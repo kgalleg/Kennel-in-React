@@ -9,7 +9,7 @@ import EmployeeDetail from './employee/EmployeeDetail'
 import AnimalForm from './animal/AnimalForm'
 import EmployeeForm from './employee/EmployeeForm'
 import OwnerList from './owner/OwnerList'
-import AnimalManager from '../modules/AnimalManager'
+// import AnimalManager from '../modules/AnimalManager'
 // import LocationsManager from '../modules/LocationsManager'
 // import OwnersManager from '../modules/OwnersManager'
 // import EmployeeManager from '../modules/EmployeeManager'
@@ -112,8 +112,8 @@ class ApplicationViews extends Component {
 
 //chapter 11 edit animal
       updateAnimal = (editedAnimalObject) => {
-        return AnimalManager.put(editedAnimalObject)
-        .then(() => AnimalManager.getAll())
+        return APIManager.put("animalsFromAPI", editedAnimalObject)
+        .then(() => APIManager.all("animalsFromAPI"))
         .then(animals => {
           this.setState({
             animals: animals
@@ -126,13 +126,20 @@ class ApplicationViews extends Component {
         return (
             <React.Fragment>
                 <Route exact path="/" render={(props) => {
-                    return <LocationList locations={this.state.locations} />
+                    if (this.isAuthenticated()) {
+                    return <LocationList locations={this.state.locations} /> } else {
+                        return <Redirect to="/login" />
+                    }
                 }} />
                 <Route exact path="/animals" render={(props) => {
+                    if (this.isAuthenticated()) {
                     return <AnimalList {...props}
                     animals={this.state.animals}
                     owners={this.state.owners}
                     deleteAnimal={this.deleteAnimal}/>
+                    }else {
+                        return <Redirect to="/login" />
+                    }
                 }} />
                 <Route exact path="/animals/:animalId(\d+)" render={(props) => {
                     let animal = this.state.animals.find(animal =>
@@ -162,6 +169,7 @@ class ApplicationViews extends Component {
                 <Route exact path="/employees" render={(props) => {
                     if (this.isAuthenticated()) {
                         return <EmployeeList
+                        {...props} //when using history.push
                         deleteEmployee={this.deleteEmployee}
                         employees={this.state.employees}
                         animals={this.state.animals} />
@@ -196,8 +204,9 @@ class ApplicationViews extends Component {
 
                 <Route exact path="/owners" render={(props) => {
                     if (this.isAuthenticated()) {
-                    return <OwnerList owners={this.state.owners} deleteOwner={this.deleteOwner}/>
-                } else {
+                    return <OwnerList {...props} owners={this.state.owners} deleteOwner={this.deleteOwner}/>
+                }
+                else {
                     return <Redirect to="/login" />
                     }
                 }} />

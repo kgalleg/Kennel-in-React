@@ -20,9 +20,9 @@ export default {
     }).then(data => data.json())
   },
 
-  //this is used in chapter 11 - edit 
+  //this is used in chapter 11 - edit
   put(editedAnimal) {
-    return fetch(`${remoteURL}/animals/${editedAnimal.id}`, {
+    return fetch(`${remoteURL}/animalsFromAPI/${editedAnimal.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

@@ -34,7 +34,7 @@ export default class EmployeeForm extends Component {
 
       // Create the animal and redirect user to employee list
       this.props.addEmployee(employee)
-        .then(() => this.props.history.push("/employees"));
+        .then(() => this.props.history.push("/employees"));  //remember {...props} when using history.push
     // }
   };
 

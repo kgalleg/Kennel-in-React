@@ -44,5 +44,30 @@ export default Object.create(null, {
     .then(() => fetch(`${remoteURL}/${resource}`))
     .then(e => e.json())
     }
-  }
-});
+  },
+
+  put: {
+    value: function (resource, editedAnimal) {
+    return fetch(`${remoteURL}/${resource}/${editedAnimal.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(editedAnimal)
+    }).then(data => data.json());
+  }}
+
+}
+)
+
+
+// /chapter 11 edit animal
+//       updateAnimal = (editedAnimalObject) => {
+//         return AnimalManager.put(editedAnimalObject)
+//         .then(() => AnimalManager.getAll())
+//         .then(animals => {
+//           this.setState({
+//             animals: animals
+//           })
+//         });
+//       };
