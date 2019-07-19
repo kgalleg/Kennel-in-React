@@ -3,7 +3,7 @@ import "./employee.css"
 import employees from "./employees.svg"
 
 
-export default class Animal extends Component {
+export default class EmployeeDetail extends Component {
     state = {
         saveDisabled: false
     }
@@ -15,13 +15,11 @@ export default class Animal extends Component {
                     <div className="card-body">
                         <h4 className="card-title">
                         <img src={employees} className="icon--employees" alt="employees"/>
-                                <h5>{employee.name}</h5>
-                            { this.props.employee.name }
+                                {this.props.employee.name}
                         </h4>
                         <h6 className="card-title">{ this.props.employee.name }</h6>
                         <button onClick={
-                                () => {
-                                    this.setState(
+                                () => {this.setState(
                                         { saveDisabled: true },
                                         () => this.props.dischargeEmployee(this.props.employee.id)
                                     )

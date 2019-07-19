@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
 import employees from "./employees.svg"
 import "./employee.css"
-import { Link } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import AnimalCard from "../animal/AnimalCard"
 
 //this is another component
 export default class EmployeeList extends Component {
         render() {
             return (
+                <React.Fragment>
+                <div className="employeeButton">
+                    <button type="button"
+                            className="btn btn-success"
+                            onClick={() => {
+                                this.props.history.push("/employees/new")}
+                            }>
+                                New Employee
+                    </button>
+                </div>
                 <section className="employees">
                 {/* <h4>Employee List</h4> */}
                 {
-                    <section className="employees">
-            {
+            //         <section className="employees">
+            // {
                 this.props.employees.map(employee =>
                     <div key={employee.id} className="card card--employee">
                         <div className="card-body">
                             <div className="card-title">
                             <img src={employees} className="icon--employees" alt="employees"/>
                                 <h5>{employee.name}</h5>
-                            <a href="#"
+                                <Link className="nav-link" to={`/employees/${employee.id}`}>Details</Link>
+                            <button //changed <a href:"#" to button istead
                                 onClick={() => this.props.deleteEmployee(employee.id)}
-                                className="card-link">Delete</a>
+                                className="card-link">Terminate</button>
                             </div>
 {/* //this above is a representation of one employee */}
                             <h6 className="card-subtitle mb-2 text-muted">Caretaker For</h6>
@@ -39,6 +50,7 @@ export default class EmployeeList extends Component {
                 )
             }
             </section>
+            </React.Fragment>
 
 //.filter .map - end results is an array - and it will be rendering it
 //state of animal list is in application views... animals{this.state.animals}
@@ -62,8 +74,8 @@ export default class EmployeeList extends Component {
                     //         </div>
                     //     </div>
                     // )
-                }
-                </section>
+                // }
+                // </section>
             )
         }
     }
